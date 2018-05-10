@@ -47,4 +47,9 @@ plt.xlabel("Velocidad")
 plt.ylabel("Densidad de probabilidad")
 plt.legend(loc=0)
 
-plt.savefig("Densidades de probabilidad")
+plt.savefig("Densidades de probabilidad.png")
+
+
+
+
+
