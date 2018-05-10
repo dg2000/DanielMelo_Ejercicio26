@@ -1,38 +1,50 @@
 import numpy as np
 
-import matplotlib as plt
-
-from matplotlib.pylab import hist, show
+import matplotlib.pyplot as plt
 
 
-vel = np.random.random(1000000)*10.0 + 35.0
 
-ang = np.random.random(1000000)*np.pi/2.0
+
+v0 = np.random.uniform(35.0, 45.0, 100000000)
+
+ang = np.random.uniform(0.0, np.pi/2.0, 100000000)
 
 
 def fun(v, teta):
 
     return v*v*np.sin(2.0*teta)/9.8
 
-d = fun(vel, ang)
+d = fun(v0, ang)
+
+
+#Primera iteracion
+d1 = np.logical_and(d>=56, d<=66)
+
+pv1 = v0[d1]
 
 
 
+#Segunda iteracion
+d2 = np.logical_and(d>=110, d<=120)
+pv2 = v0[d2]
 
-hist(d, bins=80)
-show()
+#Tercera iteracion
 
-a1 = d >= 56 
-a2 = d >= 110 
-a3 = d >= 26 
-a4 = d >= 172 
+d3 = np.logical_and(d>=26, d<=36)
+pv3 = v0[d3]
 
-b1 = d <= 66
-b2 = d <= 120
-b3 = d <= 36
-b4 = d <= 182
+#Cuarta iteracion
 
-d1 = np.concatenate((a1, b1), axis=0)
-d2 = np.concatenate((a2, b2), axis=0)
-d3 = np.concatenate((a3, b3), axis=0)
-d4 = np.concatenate((a4, b4), axis=0)
+d4 = np.logical_and(d>=172, d<=182)
+pv4 = v0[d4]
+
+plt.hist(v0, bins=100, normed = True, label="Inicial")
+plt.hist(pv1, bins=100, normed = True, label="Primera iteracion")
+plt.hist(pv2, bins=100, normed = True, label="Segunda iteracion")
+plt.hist(pv3, bins=100, normed = True, label="Tercera iteracion")
+plt.hist(pv4, bins=100, normed = True, label="Cuarta iteracion")
+plt.xlabel("Velocidad")
+plt.ylabel("Densidad de probabilidad")
+plt.legend(loc=0)
+
+plt.savefig("Densidades de probabilidad")
